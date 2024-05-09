@@ -1,7 +1,9 @@
-from log import infoLog
+from log import logConfiguration
 
 import mysql.connector
 import traceback
+import logging.config
+import time
 
 hostname = "139.144.217.51"
 dbName = "LCSATienda"
@@ -10,24 +12,26 @@ password = "lcsa2024!2"
 
 #Port 3306 - MariaDB
 
+infoLog = logging.getLogger('infoLog')
 
 def connectDB():
     connectDB = None
     try:
-        print(f"INFO: Trying to connect to {hostname}, database: {dbName}")
-        infoLog.info(f"Trying to connect to {hostname}, database: {dbName}")
+        infoLog.info(f"Username {username} trying to connect to {hostname}, database: {dbName}")
         connectDB = mysql.connector.connect(
             host = hostname,
             database = dbName,
             user = username,
             password = password
         )
+        infoLog.info(f"Username {username} connected to {hostname}, database: {dbName}")
+        return connectDB
         
     except Exception as error:
         print(f"ERROR: Wasn't possible to connect to {hostname}, error message:\n{error}")
         infoLog.error(f"Wasn't possible to connect to {hostname}, error message: {error}")
         infoLog.error(traceback.format_exc())
-    return connectDB
+    return None
 
 def closeConn(connection):
     if not connection:
@@ -36,6 +40,6 @@ def closeConn(connection):
     try:
         connection.close()
         infoLog.info("Connection closed.")
-        print(f"User {username} successfully logged out of the database.\n")
+        infoLog.info(f"User {username} successfully logged out of the database.")
     except Exception as error:
         print(f"Wasn't possible to close the session{error}")

@@ -20,7 +20,6 @@ def menuString(deviceIP, username):
     print('  -------------------------------------------------------------- \n')
 
 def inputErrorString():
-    os.system("CLS")
     print('  ------------------------------------------------- ')  
     print('>      INPUT ERROR: Only numbers are allowed       <')
     print('  ------------------------------------------------- ')

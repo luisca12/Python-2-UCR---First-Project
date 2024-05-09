@@ -1,7 +1,5 @@
 import logging
 import logging.config
-import os
-import traceback
 
 logConfiguration = {
     'version': 1,
@@ -48,17 +46,3 @@ logConfiguration = {
         },
     }
 }
-
-def mkdir():
-    path = "logs"
-    if not os.path.exists(path):
-        try:
-            os.mkdir(path)
-            infoLog.info(f"Path \"{path}\" wasn't found. New folder named \"{path}\" was created")
-        except Exception as Error:
-            print(f"ERROR: Wasn't possible to create new folder \"{path}\"")
-            infoLog.error(f"ERROR: Wasn't possible to create new folder \"{path}\"")
-            infoLog.error(traceback.format_exc())
-
-logging.config.dictConfig(logConfiguration)
-infoLog = logging.getLogger('infoLog')
